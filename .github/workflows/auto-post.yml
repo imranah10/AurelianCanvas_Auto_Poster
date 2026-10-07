@@ -1,0 +1,95 @@
+name: Aurelian Auto-Poster
+
+on:
+  schedule:
+    # 04:00 UTC = 9:30 AM IST (Pinterest batch 1)
+    - cron: "0 4 * * *"
+    # 14:30 UTC = 8:00 PM IST (Pinterest batch 2 + Instagram post)
+    - cron: "30 14 * * *"
+  workflow_dispatch:            # manual "Run workflow" button
+    inputs:
+      dry_run:
+        description: "Dry run (no real posting)"
+        type: boolean
+        default: false
+      platform:
+        description: "Which platform"
+        type: choice
+        default: all
+        options: [all, pinterest, ig]
+
+permissions:
+  contents: write               # commit state/posted.json + media-ig crops
+
+concurrency:
+  group: aurelian-poster
+  cancel-in-progress: false
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install deps
+        run: pip install --quiet pillow pynacl requests
+
+      - name: Run poster (morning batch)
+        if: github.event_name == 'schedule' && github.event.schedule == '0 4 * * *'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_PAT: ${{ secrets.GH_PAT }}
+          PINTEREST_REFRESH_TOKEN: ${{ secrets.PINTEREST_REFRESH_TOKEN }}
+          PINTEREST_CLIENT_ID: ${{ secrets.PINTEREST_CLIENT_ID }}
+          PINTEREST_CLIENT_SECRET: ${{ secrets.PINTEREST_CLIENT_SECRET }}
+          PINTEREST_ACCESS_TOKEN: ${{ secrets.PINTEREST_ACCESS_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          PAGE_ACCESS_TOKEN: ${{ secrets.PAGE_ACCESS_TOKEN }}
+          AURELIAN_BRANCH: main
+        run: |
+          git pull --rebase --autostash origin main || true
+          python3 scripts/poster.py --platform pinterest
+
+      - name: Run poster (evening batch)
+        if: github.event_name == 'schedule' && github.event.schedule == '30 14 * * *'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_PAT: ${{ secrets.GH_PAT }}
+          PINTEREST_REFRESH_TOKEN: ${{ secrets.PINTEREST_REFRESH_TOKEN }}
+          PINTEREST_CLIENT_ID: ${{ secrets.PINTEREST_CLIENT_ID }}
+          PINTEREST_CLIENT_SECRET: ${{ secrets.PINTEREST_CLIENT_SECRET }}
+          PINTEREST_ACCESS_TOKEN: ${{ secrets.PINTEREST_ACCESS_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          PAGE_ACCESS_TOKEN: ${{ secrets.PAGE_ACCESS_TOKEN }}
+          AURELIAN_BRANCH: main
+        run: |
+          git pull --rebase --autostash origin main || true
+          python3 scripts/poster.py
+
+      - name: Run poster (manual trigger)
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_PAT: ${{ secrets.GH_PAT }}
+          PINTEREST_REFRESH_TOKEN: ${{ secrets.PINTEREST_REFRESH_TOKEN }}
+          PINTEREST_CLIENT_ID: ${{ secrets.PINTEREST_CLIENT_ID }}
+          PINTEREST_CLIENT_SECRET: ${{ secrets.PINTEREST_CLIENT_SECRET }}
+          PINTEREST_ACCESS_TOKEN: ${{ secrets.PINTEREST_ACCESS_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          PAGE_ACCESS_TOKEN: ${{ secrets.PAGE_ACCESS_TOKEN }}
+          AURELIAN_BRANCH: main
+        run: |
+          ARGS=""
+          if [ "${{ inputs.dry_run }}" = "true" ]; then ARGS="$ARGS --dry-run"; fi
+          if [ -n "${{ inputs.platform }}" ]; then ARGS="$ARGS --platform ${{ inputs.platform }}"; fi
+          git pull --rebase --autostash origin main || true
+          python3 scripts/poster.py $ARGS

@@ -1,0 +1,134 @@
+{
+  "name": "Aurelian Auto-Poster (n8n - OPTIONAL)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            { "field": "cronExpression", "expression": "0 4 * * *" },
+            { "field": "cronExpression", "expression": "30 14 * * *" }
+          ]
+        }
+      },
+      "id": "a1",
+      "name": "Schedule 2x daily",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [-200, 0]
+    },
+    {
+      "parameters": {
+        "url": "https://raw.githubusercontent.com/imranah10/AurelianCanvas_Auto_Poster/main/data/schedule.json",
+        "options": {}
+      },
+      "id": "a2",
+      "name": "Fetch Schedule",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [20, 0]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// n8n fallback: image pins + IG image posts only.\n// Video pins/reels ke liye GitHub Actions use karo (main system).\nconst item = $json;\nconst state = null; // optional: fetch posted.json and dedupe here\nconst today = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Kolkata' });\nconst due = (Array.isArray(item) ? item : [item]).filter(x => x.date <= today);\nconst limited = due.slice(0, 5); // safety cap\nreturn { json: limited[0] || {} };"
+      },
+      "id": "a3",
+      "name": "Pick Today",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [240, 0]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "version": 2 },
+          "conditions": [
+            {
+              "leftValue": "={{ $json.platform }}",
+              "rightValue": "pinterest",
+              "operator": { "type": "string", "operation": "equals" }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "a4",
+      "name": "Is Pinterest?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [460, 0]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.pinterest.com/v5/pins",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ board_id: $json.board_id, title: $json.pin_title, description: $json.pin_description, link: $json.link, media_source: { media_type: 'static', items: [{ url: $json.image_url }] } }) }}",
+        "options": {}
+      },
+      "id": "a5",
+      "name": "Create Pin",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [680, -100]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $json.ig_user_id }}/media",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ image_url: $json.image_url, caption: $json.ig_caption, access_token: $json.page_token }) }}",
+        "options": {}
+      },
+      "id": "a6",
+      "name": "IG Create Container",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [680, 100]
+    },
+    {
+      "parameters": { "amount": 20 },
+      "id": "a7",
+      "name": "Wait 20s",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [900, 100],
+      "webhookId": "aurelian-wait"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $('IG Create Container').item.json.ig_user_id }}/media_publish",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ creation_id: $('IG Create Container').item.json.id, access_token: $('IG Create Container').item.json.page_token }) }}",
+        "options": {}
+      },
+      "id": "a8",
+      "name": "IG Publish",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1120, 100]
+    }
+  ],
+  "connections": {
+    "Schedule 2x daily": { "main": [[{ "node": "Fetch Schedule", "type": "main", "index": 0 }]] },
+    "Fetch Schedule": { "main": [[{ "node": "Pick Today", "type": "main", "index": 0 }]] },
+    "Pick Today": { "main": [[{ "node": "Is Pinterest?", "type": "main", "index": 0 }]] },
+    "Is Pinterest?": {
+      "main": [
+        [{ "node": "Create Pin", "type": "main", "index": 0 }],
+        [{ "node": "IG Create Container", "type": "main", "index": 0 }]
+      ]
+    },
+    "IG Create Container": { "main": [[{ "node": "Wait 20s", "type": "main", "index": 0 }]] },
+    "Wait 20s": { "main": [[{ "node": "IG Publish", "type": "main", "index": 0 }]] }
+  },
+  "settings": { "executionOrder": "v1" },
+  "_notes": "OPTIONAL BACKUP - GitHub Actions hi main system hai. Import karne se pehle: 1) Fetch Schedule me YOUR_GITHUB_USERNAME badlo. 2) Create Pin me httpHeaderAuth credential banao (Name: Authorization, Value: Bearer YOUR_PINTEREST_TOKEN). 3) IG nodes me page_token/ig_user_id schedule item me inject karne padenge (ya direct jsonBody me paste karo). 4) Ye fallback sirf IMAGE pins/post karta hai - video ke liye Actions chahiye. 5) SplitInBatches node add karke multi-item processing kar sakte ho."
+}

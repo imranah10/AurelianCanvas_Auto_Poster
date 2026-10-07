@@ -1,0 +1,70 @@
+{
+  "brand": "Aurelian Canvas",
+  "base_url": "https://aureliancanvas.gumroad.com/l/",
+  "products": {
+    "fresco-of-the-gods": {
+      "name": "Fresco of the Gods",
+      "title": "Fresco of the Gods - Renaissance Angel Fresco Wall Art Printable",
+      "style": "Renaissance fresco, cracked plaster, blue robed angels, antique gold leaf",
+      "boards": ["Renaissance Decor", "Old World Interior", "Antique Wall Art", "Printable Wall Art"]
+    },
+    "liquidonyx": {
+      "name": "Liquid Onyx",
+      "title": "Liquid Onyx - Black & Silver Marble Abstract Wall Art Printable",
+      "style": "Black marble, molten silver veins, modern luxury abstract",
+      "boards": ["Modern Luxury Decor", "Black Marble Aesthetic", "Minimalist Wall Art", "Printable Wall Art"]
+    },
+    "the-titanium-wealth": {
+      "name": "The Titanium Wealth",
+      "title": "The Titanium Wealth - Navy Blue & Gold Abstract Wall Art Printable",
+      "style": "Deep navy textured paint, bold gold palette-knife streaks",
+      "boards": ["Navy Gold Interior", "Abstract Textured Art", "Glam Living Room", "Printable Wall Art"]
+    },
+    "the-golden-empress": {
+      "name": "The Golden Empress",
+      "title": "The Golden Empress - Klimt Style Gold Leaf Portrait Printable",
+      "style": "Gustav Klimt inspired, gold leaf woman portrait, royal blue, peacock jewelry",
+      "boards": ["Art Nouveau Decor", "Gold Leaf Wall Art", "Glam Home Decor", "Printable Wall Art"]
+    },
+    "the-golden-lion": {
+      "name": "The Golden Lion",
+      "title": "The Golden Lion - Textured Gold Lion Wall Art Printable",
+      "style": "Palette-knife gold textured lion portrait, masculine executive energy",
+      "boards": ["Men's Office Decor", "Luxury Animal Portraits", "Study Room Decor", "Printable Wall Art"]
+    },
+    "she-stands-at-the-old-door": {
+      "name": "She Stands at the Old Door",
+      "title": "She Stands at the Old Door - Autumn Cottage Watercolor Printable",
+      "style": "Watercolor storybook, autumn countryside, woman at open wooden door",
+      "boards": ["Cottagecore Aesthetic", "Autumn Home Decor", "Farmhouse Wall Art", "Printable Wall Art"]
+    },
+    "the-letter": {
+      "name": "The Letter",
+      "title": "The Letter - Rainy Evening Candlelight Watercolor Printable",
+      "style": "Cozy watercolor, candlelight, rainy window, woman reading a letter",
+      "boards": ["Reading Nook Decor", "Rainy Day Mood", "Vintage Illustration", "Printable Wall Art"]
+    }
+  },
+  "bundles": {
+    "gold-series-duo": {
+      "name": "Gold Series Duo",
+      "contains": "The Golden Empress + The Golden Lion",
+      "price": "$8"
+    },
+    "luxe-abstract-duo": {
+      "name": "Luxe Abstract Duo",
+      "contains": "Liquid Onyx + The Titanium Wealth",
+      "price": "$8"
+    },
+    "storybook-diptych": {
+      "name": "Storybook Diptych",
+      "contains": "She Stands at the Old Door + The Letter",
+      "price": "$8"
+    },
+    "full-collection": {
+      "name": "Full Collection",
+      "contains": "All 7 artworks",
+      "price": "$20"
+    }
+  }
+}
