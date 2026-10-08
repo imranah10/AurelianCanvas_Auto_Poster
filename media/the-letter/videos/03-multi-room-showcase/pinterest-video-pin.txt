@@ -1,0 +1,19 @@
+PLATFORM: PINTEREST VIDEO PIN
+UPLOAD FILE: 06-the-letter/videos/03-multi-room-showcase/final_reel.mp4  (same 9:16 video as the Instagram Reel)
+
+----- PIN TITLE -----
+Rainy Evening Candlelight Watercolor - Styled in 3 Rooms | The Letter
+
+----- PIN DESCRIPTION -----
+Rainy Evening Candlelight Watercolor wall art - The Letter. The Letter styled in three different rooms - it fits all of them. Instant digital download, portrait and landscape files included. Perfect for readers, writers, cozy-corner and cottagecore lovers.
+
+----- DESTINATION LINK -----
+Paste the Gumroad product link for "The Letter" (see 00-master/product-links.csv)
+
+----- BOARDS -----
+- Cottagecore Aesthetic
+- Reading Nook Decor
+- Rainy Day Mood
+
+----- TAGS -----
+#cottagecore #readingnook #rainydays #vintageart
