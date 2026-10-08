@@ -1,0 +1,23 @@
+BRAND SETTINGS
+
+Instagram: @aureliancanvas
+Pinterest: AurelianCanvas
+Gumroad:   aureliancanvas.gumroad.com
+
+HASHTAG RULES
+- Instagram: 8-12 relevant hashtags per post (already written in each instagram-post.txt). Put them at the end of the caption or in the first comment.
+- Pinterest: hashtags matter very little - the TITLE and DESCRIPTION keywords matter most. Keep 3-4 tags max.
+- Never use the exact same 12 hashtags on every post; swap 3-4 each time from the art's tag list.
+
+PINTEREST RULES
+- Every pin links to the PRODUCT page of that art (not the store homepage).
+- Each image can be pinned again later with a different title variant (A/B/C) and a different board. Wait at least a few days between re-pins of the same image.
+- Pin title: keyword first. Art name goes in the description / Gumroad page.
+
+INSTAGRAM RULES
+- Link in bio goes to the store; change the bio link to the product you are pushing that week.
+- Reply to every comment in the first hour.
+- Stories every day: re-share the post + one question sticker.
+
+CAPTION STRUCTURE USED EVERYWHERE
+Hook line -> 1-2 lines about the art -> 3 bullets (instant download / portrait+landscape / print anywhere) -> link CTA -> one question to get comments -> hashtags
