@@ -1,0 +1,27 @@
+PLATFORM: PINTEREST PIN
+UPLOAD FILE: 03-she-stands-at-the-old-door/images/05-portrait-vs-landscape-comparison/pinterest_pin.jpg  (1000x1500px, 2:3)
+
+----- PIN TITLE (use ONE; rotate the others when you re-pin this image later) -----
+Variant A: Autumn Cottage Watercolor Printable | Portrait & Landscape Included
+Variant B: Autumn Cottage Watercolor Wall Art - 2 Orientations, 1 Download
+Variant C: Countryside Storybook Wall Art - Portrait + Landscape Files
+
+----- PIN DESCRIPTION -----
+Autumn Cottage Watercolor wall art printable - She Stands at the Old Door. A woman at an open stone doorway, a golden autumn path winding away - hopeful, nostalgic, cozy. Instant digital download with portrait and landscape files, ready to print at home or at a print shop. Perfect for cottagecore, farmhouse and cozy autumn-home lovers. Countryside Storybook Wall Art.
+
+----- DESTINATION LINK -----
+Paste the Gumroad product link for "She Stands at the Old Door" (see 00-master/product-links.csv)
+
+----- BOARDS (save to 1 main board now, to the others on later days) -----
+- Cottagecore Aesthetic
+- Autumn Home Decor
+- Farmhouse Wall Art
+- Storybook Illustration
+- Countryside Living
+- Reading Nook Decor
+
+----- TAGS -----
+#cottagecore #autumndecor #watercolorart #farmhousedecor
+
+----- ALT TEXT -----
+Autumn Cottage Watercolor printable wall art "She Stands at the Old Door" displayed in a size options
