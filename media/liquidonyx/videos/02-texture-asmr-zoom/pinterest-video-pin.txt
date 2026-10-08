@@ -1,0 +1,19 @@
+PLATFORM: PINTEREST VIDEO PIN
+UPLOAD FILE: 02-liquid-onyx/videos/02-texture-asmr-zoom/final_reel.mp4  (same 9:16 video as the Instagram Reel)
+
+----- PIN TITLE -----
+Black Marble Abstract - Texture Close-Up | Liquid Onyx
+
+----- PIN DESCRIPTION -----
+Black Marble Abstract wall art - Liquid Onyx. The texture on Liquid Onyx - jet-black marble with a river of molten silver cutting through it - quiet, heavy, expensive-looking. Instant digital download, portrait and landscape files included. Perfect for modern, minimalist and dark-luxe interiors, offices and statement walls.
+
+----- DESTINATION LINK -----
+Paste the Gumroad product link for "Liquid Onyx" (see 00-master/product-links.csv)
+
+----- BOARDS -----
+- Modern Luxury Decor
+- Black Marble Aesthetic
+- Minimalist Wall Art
+
+----- TAGS -----
+#blackmarble #modernluxury #abstractart #minimalistdecor
