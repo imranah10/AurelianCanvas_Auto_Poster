@@ -1,277 +1,252 @@
-# 🚀 AURELIAN AUTO-POSTER — COMPLETE SETUP GUIDE (Hinglish)
+# 🚀 AURELIAN AUTO-POSTER — COMPLETE SETUP GUIDE
 
-Ye system tumhare 90-din ke content (450 posts: 90 Instagram + 360 Pinterest)
-ko **GitHub ke through ROZ APNE AAP post karega** — n8n ki zaroorat nahi,
-trial ka jhanjhat nahi, FREE FOREVER.
+This system publishes your 90-day content plan (450 posts: 90 Instagram +
+360 Pinterest) **automatically every day through GitHub** — no n8n needed,
+no trial expirations, free forever.
 
 ```
-Tumhara kaam:                Robot ka kaam (roz, apne aap):
-─────────────                ──────────────────────────────
-Ek baar setup (60-90 min)    4 Pinterest pins / din (auto)
-Media files repo me upload   1 Instagram reel/post / din (auto)
-Ek baar tokens daal do       Captions + hashtags + links sab apne aap
-                             Boards khud banata hai
-                             Har post ka record state file me rakhta hai
+Your job:                     The robot's job (daily, automatic):
+─────────────                 ──────────────────────────────
+One-time setup (60-90 min)    4 Pinterest pins / day (auto)
+Upload media to the repo      1 Instagram reel/post / day (auto)
+Add tokens once               Captions + hashtags + links all included
+                              Boards are auto-created
+                              Every post is logged in the state file
 ```
 
-**Kaise chalega:** GitHub roz 2 baar (subah 9:30 AM + shaam 8:00 PM Indian
-time) ek chhota computer on karega jo `data/schedule.json` padhega, aaj ke
-posts uthayega, tumhare tokens se Instagram + Pinterest par daal dega.
+**How it runs:** GitHub wakes twice a day (9:30 AM and 8:00 PM Indian time),
+runs a small script that reads `data/schedule.json`, picks today's posts, and
+publishes them to Instagram + Pinterest using your stored tokens.
 
 ---
 
-## STEP 1 — Instagram ko BUSINESS banao (2 min)
+## STEP 1 — Convert Instagram to a BUSINESS account (2 min)
 
-Tumhara account abhi **Creator** hai. API posting ke liye **Business**
-chahiye:
+API posting requires a **Business** account (Creator is not enough):
 
 1. Instagram app → Profile → menu (☰) → **Settings and privacy**
-2. Neeche scroll → **Account type and tools** → **Switch to professional account**
-   (ya "Switch account type" dikhe to wo)
-3. **Business** chuno (Creator nahi) → Category: **Digital creator** theek hai
-4. Agar **Facebook Page connect** karne ka puche:
-   - Page hai to wo chuno. Page NAHI hai to **"Create new Page"** — naam
-     `AurelianCanvas` rakho. (Page sirf technical link ke liye hai, usko
-     manage nahi karna padega.)
+2. Scroll down → **Account type and tools** → **Switch to professional account**
+3. Choose **Business** (not Creator) → Category: **Digital creator** works fine
+4. If asked to **connect a Facebook Page**:
+   - If you have a Page, choose it. If not, **"Create new Page"** with the
+     name `AurelianCanvas`. (The Page is only a technical bridge — you never
+     have to manage it.)
 
-⚠️ Ye step sabse pehle karo — bina iske Step 3 kaam nahi karega.
+⚠️ Do this step first — without it Step 4 will not work.
 
 ---
 
-## STEP 2 — Pinterest Developer App banao (5 min)
+## STEP 2 — Create a Pinterest Developer App (5 min)
 
-1. Browser me kholo: **https://developers.pinterest.com**
-2. Pinterest Business account (AurelianCanvas) se **log in** karo
-3. **App management** ya **"Connect app"** → New app banao:
+1. Open **https://developers.pinterest.com** in a browser
+2. Log in with the Pinterest **Business** account (AurelianCanvas)
+3. **App management** / **"Connect app"** → create a new app:
    - App name: `Aurelian Canvas Poster`
    - Description: `Auto posting for Aurelian Canvas`
-4. App khulne par 2 cheezein COPY karo:
-   - **App ID** → ye hai `PINTEREST_CLIENT_ID`
-   - **App secret** → ye hai `PINTEREST_CLIENT_SECRET`
-   (Notepad me save kar lo)
-5. App ke **Settings/Dashboard** me **Redirect URI** wali jagah ye daalo:
+4. When the app opens, COPY two values:
+   - **App ID** → this becomes `PINTEREST_CLIENT_ID`
+   - **App secret** → this becomes `PINTEREST_CLIENT_SECRET`
+5. In the app's **Settings/Dashboard**, set the **Redirect URI** to:
    ```
    https://localhost/callback
    ```
 
 ---
 
-## STEP 3 — Pinterest Token nikalo (10 min)
+## STEP 3 — Mint the Pinterest token (10 min)
 
-Repo me ek helper script di hai: `scripts/pinterest_setup.py`
+A helper script ships in the repo: `scripts/pinterest_setup.py`
 
-**Tareeka A (Python hai computer me):**
+**Method A (Python installed):**
 ```
 python3 scripts/pinterest_setup.py
 ```
-Ye tumse App ID, Secret, aur ek CODE mangega. Code aise nikalta hai:
+It asks for your App ID, Secret, and a CODE. To get the code:
 
-1. Neeche wali URL browser me kholo — `APP_ID_YAHAN` ki jagah apna App ID:
+1. Open this URL in a browser (replace `APP_ID_HERE` with your App ID):
 ```
-https://www.pinterest.com/oauth/?response_type=code&redirect_uri=https://localhost/callback&consumer_id=APP_ID_YAHAN&scope=boards:read,boards:write,pins:read,pins:write,user_accounts:read&refreshable=true
+https://www.pinterest.com/oauth/?response_type=code&redirect_uri=https://localhost/callback&consumer_id=APP_ID_HERE&scope=boards:read,boards:write,pins:read,pins:write,user_accounts:read&refreshable=true
 ```
-2. Pinterest tumhe permissions dikhayega → **Allow/Grant** dabao
-3. Browser ek error page dikhayega (`localhost` khul nahi sakta) — **ye
-   NORMAL hai!** Sirf browser ke **address bar** me upar dekho:
+2. Pinterest shows a permissions screen → click **Allow/Grant**
+3. The browser shows an error page (`localhost` can't be reached) — **this is
+   NORMAL!** Look at the **address bar**:
    ```
    https://localhost/callback?code=pina_xxxxxxxxxx&...
    ```
-   `code=` ke baad wala pura hissa (tak ki `&` se pehle) COPY karo.
-4. Ye code script me paste karo → script tumhe **REFRESH TOKEN** dega.
+   COPY everything after `code=` (up to the next `&`).
+4. Paste the code into the script → it prints your **REFRESH TOKEN**.
 
-**Tareeka B (agar Python nahi hai):** Step 3 ka code nikalne ke baad
-Command Prompt (Windows) me ye chalao (teen jagah apni values daalo):
+**Method B (no Python):** after extracting the code, run in Command Prompt
+(fill in all three placeholders):
 ```
-curl -X POST https://api.pinterest.com/v5/oauth/token -H "Authorization: Basic BASE64HERE" -d "grant_type=authorization_code&code=CODE_YAHAN&redirect_uri=https://localhost/callback"
+curl -X POST https://api.pinterest.com/v5/oauth/token -H "Authorization: Basic BASE64_HERE" -d "grant_type=authorization_code&code=CODE_HERE&redirect_uri=https://localhost/callback"
 ```
-(`BASE64HERE` = base64 of `APP_ID:APP_SECRET` — nahi pata to Tareeka A
-use karo, wo khud handle karta hai)
+(`BASE64_HERE` = base64 of `APP_ID:APP_SECRET` — if unsure, use Method A.)
 
-✅ End me tumhare paas hoga: **PINTEREST_REFRESH_TOKEN** (lamba wala token)
+✅ You now have: **PINTEREST_REFRESH_TOKEN** (the long-lived token)
 
 ---
 
-## STEP 4 — Instagram Tokens nikalo (15 min)
+## STEP 4 — Instagram tokens via Meta (15 min)
 
-Ye Meta ka process hai — 4 chhote browser steps. Ek-ek karke:
+Four short browser steps:
 
-**4a. Meta App banao:**
-1. Kholo: **https://developers.facebook.com** → Facebook account se login
-2. **My Apps** → **Create App** → App type: **Business** → App name:
-   `Aurelian Poster` → Create
-3. App ke dashboard par **App ID** aur **App Secret** copy karo
-   (Settings → Basic me App Secret dikhega) — Notepad me rakho
+**4a. Create the Meta app:**
+1. Open **https://developers.facebook.com** → log in
+2. **My Apps → Create App** → type: **Business** → name: `Aurelian Poster`
+3. In the use-case wizard select **"Manage messaging & content on
+   Instagram"**, and also add **"Manage everything on your Page"**
+   (Page permissions like `pages_show_list` live in that second use case)
+4. Copy **App ID** and **App Secret** (App settings → Basic) — save them
 
-**4b. Short token lo:**
-1. Kholo: **https://developers.facebook.com/tools/explorer/**
-2. Right-top me apna app `Aurelian Poster` select karo
-3. **Permissions** dropdown se YE CHAR permissions add karo:
-   - `instagram_business_basic`
-   - `instagram_business_content_publishing`
+**4b. Generate a short token (Graph API Explorer):**
+1. Open **https://developers.facebook.com/tools/explorer/**
+2. Top right: select your app `Aurelian Poster`
+3. Add these permissions (old-style names — the `instagram_business_*`
+   variants belong to a different login flow and may be rejected):
+   - `instagram_basic`
+   - `instagram_content_publish`
    - `pages_show_list`
    - `pages_read_engagement`
-4. **Generate Access Token** dabao → popup allow karo (sab yes)
-5. Jo token bana, usko COPY karo (ye SHORT token hai, agli step me use hoga)
+4. Click **Generate Access Token** → approve every popup (allow all)
+5. COPY the token it produces (a short-lived token)
 
-**4c. Long token banao (browser me URL kholo):**
-Neeche wali URL me 3 jagah apni values daal ke browser me kholo:
+**4c. Exchange for a 60-day token (open in browser):**
 ```
 https://graph.facebook.com/v21.0/oauth/access_token?grant_type=fb_exchange_token&client_id=APP_ID&client_secret=APP_SECRET&fb_exchange_token=SHORT_TOKEN
 ```
-→ JSON dikhega: `{"access_token":"EAA...","token_type":...}` — ye naya
-token **60 din** chalta hai. Copy karo.
+→ JSON appears: `{"access_token":"EAA...",...}` — copy this new token
+(valid 60 days).
 
-**4d. Page token + IG ID nikalo (browser me 2 URL):**
+**4d. Get the Page token + IG user ID (two browser URLs):**
 
-URL 1 (LONG_TOKEN ki jagah 4c ka token):
+URL 1 (paste the 4c token):
 ```
 https://graph.facebook.com/v21.0/me/accounts?access_token=LONG_TOKEN
 ```
-→ JSON me tumhare Facebook Page ki list dikhegi. Us page ke entry se 2
-cheezein COPY karo: `"access_token"` (page ka token — **ye kabhi expire
-nahi hota**, yahi PAGE_ACCESS_TOKEN hai) aur `"id"` (ye hai PAGE_ID).
+→ Find your Facebook Page in the JSON and COPY: `"access_token"`
+(the Page token — **this one never expires**; this is your
+`PAGE_ACCESS_TOKEN`) and `"id"` (the PAGE_ID).
 
-URL 2 (PAGE_ID daal ke):
+URL 2 (insert PAGE_ID):
 ```
 https://graph.facebook.com/v21.0/PAGE_ID?fields=instagram_business_account&access_token=PAGE_TOKEN
 ```
-→ `instagram_business_account: { id: "1784..." }` — ye ID hai
+→ `instagram_business_account: { "id": "1784..." }` — that ID is your
 **IG_USER_ID**.
 
-✅ End me tumhare paas: **PAGE_ACCESS_TOKEN** + **IG_USER_ID**
+✅ You now have: **PAGE_ACCESS_TOKEN** + **IG_USER_ID**
 
-⚠️ Agar URL 2 me `instagram_business_account` NAHI dikhe — matlab Step 1
-(business switch + page connect) complete nahi hua. Wapas Step 1 check karo.
+⚠️ If URL 2 shows no `instagram_business_account` — Step 1 (business switch
++ Page↔Instagram link) is incomplete. Re-do Step 1: connect the Instagram
+profile to the Facebook Page (Meta will offer "Add to business portfolio"
+— accept it).
 
 ---
 
-## STEP 5 — GitHub Repo banao + files upload (15 min)
+## STEP 5 — Repo + media upload (15 min)
 
-✅ **GOOD NEWS — YE STEP ADHURA HO CHUKA HAI:** Repo
-**https://github.com/imranah10/AurelianCanvas_Auto_Poster** ban chuka hai
-aur isme scripts/config/data/workflow SAB PUSH ho chuke hain. Neeche ke
-steps sirf isliye diye hain ki agar kabhi dobara khud upload karna ho.
+✅ **GOOD NEWS — THIS STEP IS ALREADY DONE:** the repo
+**https://github.com/imranah10/AurelianCanvas_Auto_Poster** exists and all
+scripts/config/data/workflow files are pushed. Steps below remain only as
+reference for future re-uploads.
 
 1. Repo: **https://github.com/imranah10/AurelianCanvas_Auto_Poster**
-   (Visibility PUBLIC hai — zaroori hai! Instagram/Pinterest ko media
-   files khulkar download karni hain — private repo me ye kaam nahi karega)
-2. Files upload karni ho to repo page par **Add file → Upload files**
-   par click karke DRAG-DROP karo:
-   - `scripts/`, `config/`, `data/`, `state/`, `.github/` folders
-   - `README.md`, `SETUP-GUIDE.md`
-3. **Ab tumhari 67 generated files** `media/` me daalo:
-   - Pehle `media/` folder me ghuse (GitHub web par folder banao: Add
-     file → upload → file path me `media/fresco-of-the-gods/1.jpg` type
-     karke folder auto-ban jata hai)
-   - Rules ZIP ke `media/README-MEDIA.txt` me likhe hain — short me:
-     har art ka folder uske slug naam se, images + final joined reels
-     same folder me, bundles ke 4 collages `media/bundles/` me
-     `1-gold-series-duo.jpg` ... `4-full-collection.jpg` naam se
-4. Neeche **Commit changes** dabao
+   (visibility must stay **PUBLIC** — platforms download media from raw
+   URLs; a private repo breaks posting)
+2. To upload files: **Add file → Upload files** → drag-and-drop
+3. Your 67 generated files go under `media/` following
+   `media/README-MEDIA.txt`: one folder per art slug (exact names), images
+   + final joined reels in the same folder, the 4 bundle collages in
+   `media/bundles/`
+4. Click **Commit changes**
 
-⚠️ Ek file ka size 25MB se kam hona chahiye web upload ke liye. Reels
-720p ki ~10-15MB hoti hain — theek chalengi. Badi ho to zip se pehle
-compress kar lo, ya GitHub Desktop use karo (25MB limit nahi, 100MB tak
-chalega).
-
-📁 **MEDIA UPLOAD KA SABSE AASAN TARIKA (GitHub Desktop):**
-1. https://desktop.github.com se GitHub Desktop install karo
-2. File → Clone repository → `imranah10/AurelianCanvas_Auto_Poster` chuno
-   → Local path: `C:\Users\Imran ahamad\Documents\AutoPoster` rakho
-3. Windows Explorer me local `aurelian-canvas` folder se apni 67 files
-   media/README-MEDIA.txt ke rules ke hisab se repo ke `media/` folders
-   me copy-paste karo
-4. GitHub Desktop khud changes dikhega → neeche summary likho `media add`
-   → **Commit to main** → upar **Push origin** — DONE! (25MB limit nahi)
+📁 **Easiest media upload method (GitHub Desktop):**
+1. Install from **https://desktop.github.com**
+2. **File → Clone repository** → choose `imranah10/AurelianCanvas_Auto_Poster`
+3. Copy your 67 files into the repo's `media/` folders per the naming rules
+4. GitHub Desktop shows the changes → summary: `media add` →
+   **Commit to main** → **Push origin** — DONE (no 25 MB web limit)
 
 ---
 
-## STEP 6 — GitHub Secrets daalo (10 min)
+## STEP 6 — Add GitHub Secrets (10 min)
 
-Repo page par: **Settings → Secrets and variables → Actions** →
-**New repository secret** — YE 7 secrets ek-ek karke banao:
+Repo page: **Settings → Secrets and variables → Actions →
+New repository secret** — create these:
 
-| Name | Value kya hai |
-|------|---------------|
-| `PINTEREST_CLIENT_ID` | Step 2 ka App ID |
-| `PINTEREST_CLIENT_SECRET` | Step 2 ka App Secret |
-| `PINTEREST_REFRESH_TOKEN` | Step 3 ka refresh token |
-| `IG_USER_ID` | Step 4d ki `1784...` ID |
-| `PAGE_ACCESS_TOKEN` | Step 4d ka page token (jo kabhi expire nahi hota) |
-| `GH_PAT` | Neeche Step 6b se banega |
-| `AURELIAN_BRANCH` | `main` (bas itna hi likhna hai) |
+| Name | Value |
+|------|-------|
+| `PINTEREST_CLIENT_ID` | App ID from Step 2 |
+| `PINTEREST_CLIENT_SECRET` | App Secret from Step 2 |
+| `PINTEREST_REFRESH_TOKEN` | Refresh token from Step 3 |
+| `IG_USER_ID` | `1784...` ID from Step 4d |
+| `PAGE_ACCESS_TOKEN` | Page token from Step 4d (never expires) |
+| `GH_PAT` | From Step 6b below (optional — token auto-rotation) |
+| `AURELIAN_BRANCH` | `main` |
 
-**6b. GH_PAT banana (token auto-rotate ke liye):**
+**6b. Create GH_PAT (for Pinterest token auto-rotation):**
 1. **https://github.com/settings/personal-access-tokens/new**
-2. Token name: `autoposter` → Expiration: 90 din (baad me bana dena)
-3. **Only select repositories** → apna `AurelianCanvas_Auto_Poster` chuno
-4. **Permissions** me:
-   - `Secrets`: **Read and write**
-   - `Contents`: **Read and write**
-5. Generate → token copy → wahan `GH_PAT` secret me paste karo
+2. Token name: `autoposter` → Expiration: 90 days
+3. **Only select repositories** → pick `AurelianCanvas_Auto_Poster`
+4. **Permissions**: `Secrets: Read and write`, `Contents: Read and write`
+5. Generate → copy → paste into the `GH_PAT` secret
 
 ---
 
-## STEP 7 — TEST KARO (5 min)
+## STEP 7 — TEST (5 min)
 
-1. Repo me **Actions** tab kholo → agar puche to **"I understand my
-   workflows, go ahead and enable them"**
-2. Left me **Aurelian Auto-Poster** → right me **Run workflow** button
-3. Dropdown: `dry_run` = **true**, platform = `all` → **Run workflow**
-4. Run par click karke logs padho:
-   - `DRY POST PIN-D001-1 | Renaissance Decor | ...` dikhna chahiye
-   - `media missing` dikhe to koi folder/file naam galat hai — media
-     folders dobara check karo (names EXACT hone chahiye)
+1. Open the repo's **Actions** tab → enable workflows if asked
+2. Left sidebar: **Aurelian Auto-Poster** → **Run workflow**
+3. Set `dry_run` = **true**, platform = `all` → **Run workflow**
+4. Open the run and read the logs:
+   - You should see `DRY POST PIN-D001-1 | Renaissance Decor | ...`
+   - `media missing` means a folder/file name mismatch — fix names exactly
 
-Dry-run bilkul real jaisa hai — bas posting nahi karta. Logs me dikh
-jayega kya-kya post hota.
-
-**Ab REAL run:** dubara Run workflow → `dry_run` = **false** → aur dekho
-jaise apne aap Pinterest + Instagram par posts live hoti hain! 🎉
+Dry-run behaves like the real thing except it doesn't publish. When it's
+green: run again with `dry_run` = **false** and watch posts go live! 🎉
 
 ---
 
-## STEP 8 — ROZ KA SYSTEM (0 min)
+## STEP 8 — DAILY OPERATION (0 min)
 
-Bas kuch bhi mat karo. GitHub roz khud:
+Do nothing. GitHub runs automatically:
 - **9:30 AM IST** — 2 Pinterest pins
 - **8:00 PM IST** — 2 Pinterest pins + 1 Instagram post
 
-Har hafte ek baar dono apps khol ke notifications/likes dekh lo.
-Pinterest analytics me monthly views 30 din me grow honge.
+Once a week, open both apps to check notifications and likes.
 
 ---
 
 ## 🩹 TROUBLESHOOTING
 
-| Problem | Matlab | Fix |
-|---------|--------|-----|
-| IG: "must be a business account" | Business switch nahi hua | Step 1 dubara |
-| IG: 4d me instagram_business_account nahi | Page link nahi hua | Step 1 ka Page connect |
-| Pinterest: 401 unauthorized | Refresh token expire/bad | Step 3 dubara (naya token) |
-| Pins me image nahi dikhti | Repo private hai YA media path galat | Repo public karo / folder names check |
-| "media missing" logs me | Folder/file naming mismatch | `media/README-MEDIA.txt` follow karo |
-| Actions tab me workflow nahi | Enable nahi kiya | Step 7 ka enable line |
-| Kuch din skip ho gaye | PC band tha ya error — koi baat nahi | Agla run purane due posts khud catch-up karega |
+| Problem | Meaning | Fix |
+|---------|---------|-----|
+| IG: "must be a business account" | Business switch not done | Redo Step 1 |
+| IG: no instagram_business_account in 4d | Page↔IG link missing | Step 1 Page connect ("Add to portfolio") |
+| Pinterest: 401 unauthorized | Refresh token expired/bad | Redo Step 3 |
+| Pin images blank | Repo private OR wrong media path | Make repo public / check folder names |
+| "media missing" in logs | Folder/file naming mismatch | Follow `media/README-MEDIA.txt` exactly |
+| Workflow missing in Actions | Not enabled | Enable via Step 7 |
+| Some days skipped | PC off or an error — fine | Next run catch-up publishes due posts |
 
-## ⛔ YE MAT KARNA
+## ⛔ NEVER DO THIS
 
-- Repo **private mat karo** (media URLs public hone chahiye)
-- Secrets ko kisi file me **paste mat karo** — sirf GitHub Secrets me
-- `state/posted.json` **haath se mat chhedo** (robot isse duplicate
-  posts rokta hai)
-- `media/` ke folder **naam mat badlo** (schedule unhi naam se dhoondta hai)
-- Meta/Pinterest app me **permissions kam mat karo**
+- Don't make the repo **private** (media URLs must be publicly fetchable)
+- Don't paste secrets into any file — **GitHub Secrets only**
+- Don't hand-edit `state/posted.json` (duplicate-post guard)
+- Don't rename folders in `media/` (schedule resolves by exact slug)
+- Don't reduce app permissions in Meta/Pinterest dashboards
 
 ## 🔐 SECURITY NOTE
 
-Tokens GitHub ke **Secrets** me hote hain — encrypted, koi nahi dekh
-sakta (tum bhi dubara nahi dekh paoge, bas replace kar sakte ho).
-Pinterest token robot khud roz refresh karta hai (isliye `GH_PAT` chahiye).
-Repo public hai par sirf media + captions hain — koi secret nahi.
+All tokens live in GitHub **Secrets** — encrypted at rest; even you cannot
+view them again (only replace). The Pinterest token is refreshed
+automatically by the robot (that's what `GH_PAT` enables). The public repo
+contains only media and captions — no secrets.
 
-## 📞 Agar phas jao
+## 📞 If you get stuck
 
-Step 1-2-5 sabse aasan hain. Step 3-4 tokens wale thode technical hain —
-dheere dheere, ek-ek URL kholo, output copy karte jao. Koi step atke to
-mujhe wahan ka screenshot bhejo, main exact next line bata dunga.
+Steps 1, 2 and 5 are the easy ones. Steps 3–4 (tokens) are the technical
+ones — go slowly, open one URL at a time, copy outputs as you go. If a step
+fails, screenshot it and work through the fix line by line.
