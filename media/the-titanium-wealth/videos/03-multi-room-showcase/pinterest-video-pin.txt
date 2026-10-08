@@ -1,0 +1,19 @@
+PLATFORM: PINTEREST VIDEO PIN
+UPLOAD FILE: 07-the-titanium-wealth/videos/03-multi-room-showcase/final_reel.mp4  (same 9:16 video as the Instagram Reel)
+
+----- PIN TITLE -----
+Navy Blue & Gold Abstract - Styled in 3 Rooms | The Titanium Wealth
+
+----- PIN DESCRIPTION -----
+Navy Blue & Gold Abstract wall art - The Titanium Wealth. The Titanium Wealth styled in three different rooms - it fits all of them. Instant digital download, portrait and landscape files included. Perfect for modern luxe living rooms, offices and bedrooms.
+
+----- DESTINATION LINK -----
+Paste the Gumroad product link for "The Titanium Wealth" (see 00-master/product-links.csv)
+
+----- BOARDS -----
+- Modern Luxury Decor
+- Navy Gold Interior
+- Abstract Textured Art
+
+----- TAGS -----
+#navyandgold #abstractart #modernluxury #texturedart
