@@ -1,0 +1,26 @@
+PLATFORM: PINTEREST PIN
+UPLOAD FILE: 02-liquid-onyx/images/02-bedroom-mockup/pinterest_pin.jpg  (1000x1500px, 2:3)
+
+----- PIN TITLE (use ONE; rotate the others when you re-pin this image later) -----
+Variant A: Black Marble Abstract Printable | Bedroom Wall Art Idea
+Variant B: Above the Bed: Black Marble Abstract Art Print
+Variant C: Silver Crack Modern Luxury Art for Bedroom - Digital Download
+
+----- PIN DESCRIPTION -----
+Black Marble Abstract wall art printable - Liquid Onyx. Jet-black marble with a river of molten silver cutting through it - quiet, heavy, expensive-looking. Instant digital download with portrait and landscape files, ready to print at home or at a print shop. Perfect for modern, minimalist and dark-luxe interiors, offices and statement walls. Silver Crack Modern Luxury Art.
+
+----- DESTINATION LINK -----
+Paste the Gumroad product link for "Liquid Onyx" (see 00-master/product-links.csv)
+
+----- BOARDS (save to 1 main board now, to the others on later days) -----
+- Modern Luxury Decor
+- Black Marble Aesthetic
+- Minimalist Wall Art
+- Dark Academia Home
+- Men's Office Decor
+
+----- TAGS -----
+#blackmarble #modernluxury #abstractart #minimalistdecor
+
+----- ALT TEXT -----
+Black Marble Abstract printable wall art "Liquid Onyx" displayed in a bedroom
