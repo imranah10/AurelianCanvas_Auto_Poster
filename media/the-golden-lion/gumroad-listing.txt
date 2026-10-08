@@ -1,0 +1,38 @@
+GUMROAD LISTING - The Golden Lion  (Collection D - Gold Series)
+
+PRICE: $7  (bundle prices are in 00-master/gumroad-bundles.txt)
+
+TITLE:
+The Golden Lion - Textured Gold Lion Wall Art Printable | Luxury Masculine Office Decor
+
+COVER / THUMBNAIL: use the Living Room mockup image (images/01-*/) - square-crop it for the Gumroad thumbnail.
+PRODUCT PREVIEW IMAGES (add 5): living room mockup, bedroom/office mockup, portrait-vs-landscape comparison, close-up texture, one more mockup.
+
+DESCRIPTION (copy):
+THE GOLDEN LION
+
+A thick palette-knife lion, mane in molten gold, eyes locked on you - pure presence.
+
+Perfect for offices, studies, gift-for-him and bold statement walls.
+
+WHAT YOU GET
+✔ Portrait file AND landscape file (2 orientations in one purchase)
+✔ High-resolution digital files, ready to print
+✔ Instant download right after purchase
+✔ Print at home or at your local print shop / online print service, then frame it
+
+HOW IT WORKS
+1. Purchase and download your files instantly
+2. Print at your preferred size and paper
+3. Frame it and hang it
+
+PLEASE NOTE
+• This is a DIGITAL product - no physical item will be shipped
+• Frame, mockups and wall decor shown in photos are NOT included
+• Colors may vary slightly depending on your screen and printer
+• For personal use only - not for resale or redistribution
+
+TAGS:
+lion, gold, textured art, office decor, masculine, printable wall art, digital download, wall art
+
+TODO BEFORE PUBLISHING: check your real file resolution and add one line listing the print sizes it supports.
