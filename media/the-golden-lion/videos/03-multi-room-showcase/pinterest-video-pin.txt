@@ -1,0 +1,19 @@
+PLATFORM: PINTEREST VIDEO PIN
+UPLOAD FILE: 05-the-golden-lion/videos/03-multi-room-showcase/final_reel.mp4  (same 9:16 video as the Instagram Reel)
+
+----- PIN TITLE -----
+Textured Gold Lion - Styled in 3 Rooms | The Golden Lion
+
+----- PIN DESCRIPTION -----
+Textured Gold Lion wall art - The Golden Lion. The Golden Lion styled in three different rooms - it fits all of them. Instant digital download, portrait and landscape files included. Perfect for offices, studies, gift-for-him and bold statement walls.
+
+----- DESTINATION LINK -----
+Paste the Gumroad product link for "The Golden Lion" (see 00-master/product-links.csv)
+
+----- BOARDS -----
+- Lion Wall Art
+- Men's Office Decor
+- Executive Office Art
+
+----- TAGS -----
+#lionart #officedecor #goldlion #mensdecor
