@@ -1,0 +1,27 @@
+PLATFORM: PINTEREST PIN
+UPLOAD FILE: 06-the-letter/images/02-reading-nook-mockup/pinterest_pin.jpg  (1000x1500px, 2:3)
+
+----- PIN TITLE (use ONE; rotate the others when you re-pin this image later) -----
+Variant A: Rainy Evening Candlelight Watercolor Printable | Reading Nook Wall Art
+Variant B: Cozy Corner Decor: Rainy Evening Candlelight Watercolor Art
+Variant C: Cottagecore Wall Art for Reading Nook - Digital Download
+
+----- PIN DESCRIPTION -----
+Rainy Evening Candlelight Watercolor wall art printable - The Letter. A woman reading a handwritten letter by candlelight while rain falls on a lamp-lit street - quiet and tender. Instant digital download with portrait and landscape files, ready to print at home or at a print shop. Perfect for readers, writers, cozy-corner and cottagecore lovers. Cottagecore Wall Art.
+
+----- DESTINATION LINK -----
+Paste the Gumroad product link for "The Letter" (see 00-master/product-links.csv)
+
+----- BOARDS (save to 1 main board now, to the others on later days) -----
+- Cottagecore Aesthetic
+- Reading Nook Decor
+- Rainy Day Mood
+- Vintage Illustration
+- Autumn Home Decor
+- Candlelight Decor
+
+----- TAGS -----
+#cottagecore #readingnook #rainydays #vintageart
+
+----- ALT TEXT -----
+Rainy Evening Candlelight Watercolor printable wall art "The Letter" displayed in a reading nook
