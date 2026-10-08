@@ -1,0 +1,4 @@
+Save in THIS folder:
+  part1-10s.mp4   (generated from part1-10s-prompt.txt)
+  part2-6s.mp4    (generated from part2-6s-prompt.txt)
+  final_reel.mp4  (Part 1 + Part 2 joined, with voice-over + music)  <- this is what you upload to Instagram AND Pinterest
