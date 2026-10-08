@@ -1,0 +1,4 @@
+Save your generated image(s) in THIS folder with these exact names:
+  instagram_post.jpg   (Instagram, 1080x1350 or 1080x1080 for close-up)
+  pinterest_pin.jpg    (Pinterest, 1000x1500)
+Delete this note when done if you want.
