@@ -1,0 +1,21 @@
+PLATFORM: PINTEREST PIN
+UPLOAD FILE: 00-master/bundle-collages/04-full-store-collage-all-7-art/pinterest_pin.jpg  (1000x1500px, 2:3)
+
+----- PIN TITLE -----
+Variant A: Full Collection (all 7) Printable Wall Art Set | Digital Download Bundle
+Variant B: Gallery Wall Set - Printable Art Bundle
+Variant C: Matching Wall Art Set - $25 Digital Download
+
+----- PIN DESCRIPTION -----
+Full Collection (all 7) printable wall art bundle: all 7 Aurelian Canvas artworks. Instant digital download with portrait and landscape files, ready to print and frame. Save when you buy the set.
+
+----- DESTINATION LINK -----
+Paste the Gumroad BUNDLE link (see 00-master/gumroad-bundles.txt)
+
+----- BOARDS -----
+- Printable Wall Art
+- Gallery Wall Ideas
+- Home Decor Sets
+
+----- TAGS -----
+#printablewallart #gallerywall #wallartset #digitaldownload
