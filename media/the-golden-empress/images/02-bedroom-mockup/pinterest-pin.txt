@@ -1,0 +1,27 @@
+PLATFORM: PINTEREST PIN
+UPLOAD FILE: 04-the-golden-empress/images/02-bedroom-mockup/pinterest_pin.jpg  (1000x1500px, 2:3)
+
+----- PIN TITLE (use ONE; rotate the others when you re-pin this image later) -----
+Variant A: Klimt Style Gold Leaf Portrait Printable | Bedroom Wall Art Idea
+Variant B: Above the Bed: Klimt Style Gold Leaf Portrait Art Print
+Variant C: Royal Blue & Gold Peacock Art for Bedroom - Digital Download
+
+----- PIN DESCRIPTION -----
+Klimt Style Gold Leaf Portrait wall art printable - The Golden Empress. A jewelled empress in profile, hammered gold leaf, peacocks and sapphire blue - Klimt meets art nouveau. Instant digital download with portrait and landscape files, ready to print at home or at a print shop. Perfect for glam, jewel-tone and art-nouveau lovers who want a real statement piece. Royal Blue & Gold Peacock Art.
+
+----- DESTINATION LINK -----
+Paste the Gumroad product link for "The Golden Empress" (see 00-master/product-links.csv)
+
+----- BOARDS (save to 1 main board now, to the others on later days) -----
+- Gustav Klimt Inspired
+- Art Nouveau Decor
+- Gold Leaf Wall Art
+- Jewel Tone Interior
+- Glam Home Decor
+- Peacock Decor
+
+----- TAGS -----
+#klimtart #goldleaf #artnouveau #peacockart
+
+----- ALT TEXT -----
+Klimt Style Gold Leaf Portrait printable wall art "The Golden Empress" displayed in a bedroom
