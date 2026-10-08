@@ -1,0 +1,26 @@
+PLATFORM: PINTEREST PIN
+UPLOAD FILE: 01-fresco-of-the-gods/images/04-office-study-mockup/pinterest_pin.jpg  (1000x1500px, 2:3)
+
+----- PIN TITLE (use ONE; rotate the others when you re-pin this image later) -----
+Variant A: Renaissance Angel Fresco Printable | Study Room Wall Art
+Variant B: Study Room Decor: Renaissance Angel Fresco Art
+Variant C: Antique Blue & Gold Ceiling Art - Printable Digital Download
+
+----- PIN DESCRIPTION -----
+Renaissance Angel Fresco wall art printable - Fresco of the Gods. Cracked antique plaster, flying angels, deep sapphire blue and real-gold halos - an old-world Italian church ceiling for your wall. Instant digital download with portrait and landscape files, ready to print at home or at a print shop. Perfect for people who love old-world, museum-style, Italian villa and maximalist interiors. Antique Blue & Gold Ceiling Art.
+
+----- DESTINATION LINK -----
+Paste the Gumroad product link for "Fresco of the Gods" (see 00-master/product-links.csv)
+
+----- BOARDS (save to 1 main board now, to the others on later days) -----
+- Renaissance Decor
+- Old World Interior
+- Italian Villa Aesthetic
+- Antique Wall Art
+- Maximalist Decor
+
+----- TAGS -----
+#frescoart #renaissanceart #oldworlddecor #angelart
+
+----- ALT TEXT -----
+Renaissance Angel Fresco printable wall art "Fresco of the Gods" displayed in a study
