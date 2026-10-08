@@ -1,0 +1,25 @@
+PLATFORM: PINTEREST PIN
+UPLOAD FILE: 07-the-titanium-wealth/images/05-portrait-vs-landscape-comparison/pinterest_pin.jpg  (1000x1500px, 2:3)
+
+----- PIN TITLE (use ONE; rotate the others when you re-pin this image later) -----
+Variant A: Navy Blue & Gold Abstract Printable | Portrait & Landscape Included
+Variant B: Navy Blue & Gold Abstract Wall Art - 2 Orientations, 1 Download
+Variant C: Luxury Textured Modern Art - Portrait + Landscape Files
+
+----- PIN DESCRIPTION -----
+Navy Blue & Gold Abstract wall art printable - The Titanium Wealth. Chunky navy and black palette-knife strokes with a flash of liquid gold - rich, bold, high-end. Instant digital download with portrait and landscape files, ready to print at home or at a print shop. Perfect for modern luxe living rooms, offices and bedrooms. Luxury Textured Modern Art.
+
+----- DESTINATION LINK -----
+Paste the Gumroad product link for "The Titanium Wealth" (see 00-master/product-links.csv)
+
+----- BOARDS (save to 1 main board now, to the others on later days) -----
+- Modern Luxury Decor
+- Navy Gold Interior
+- Abstract Textured Art
+- Glam Living Room
+
+----- TAGS -----
+#navyandgold #abstractart #modernluxury #texturedart
+
+----- ALT TEXT -----
+Navy Blue & Gold Abstract printable wall art "The Titanium Wealth" displayed in a size options
