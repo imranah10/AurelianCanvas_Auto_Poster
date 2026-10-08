@@ -1,0 +1,21 @@
+PLATFORM: PINTEREST PIN
+UPLOAD FILE: 00-master/bundle-collages/03-storybook-diptych-collage/pinterest_pin.jpg  (1000x1500px, 2:3)
+
+----- PIN TITLE -----
+Variant A: Storybook Diptych Printable Wall Art Set | Digital Download Bundle
+Variant B: Gallery Wall Set - Printable Art Bundle
+Variant C: Matching Wall Art Set - $12 Digital Download
+
+----- PIN DESCRIPTION -----
+Storybook Diptych printable wall art bundle: She Stands at the Old Door + The Letter. Instant digital download with portrait and landscape files, ready to print and frame. Save when you buy the set.
+
+----- DESTINATION LINK -----
+Paste the Gumroad BUNDLE link (see 00-master/gumroad-bundles.txt)
+
+----- BOARDS -----
+- Printable Wall Art
+- Gallery Wall Ideas
+- Home Decor Sets
+
+----- TAGS -----
+#printablewallart #gallerywall #wallartset #digitaldownload
