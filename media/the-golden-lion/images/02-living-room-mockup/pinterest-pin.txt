@@ -1,0 +1,27 @@
+PLATFORM: PINTEREST PIN
+UPLOAD FILE: 05-the-golden-lion/images/02-living-room-mockup/pinterest_pin.jpg  (1000x1500px, 2:3)
+
+----- PIN TITLE (use ONE; rotate the others when you re-pin this image later) -----
+Variant A: Textured Gold Lion Wall Art | Printable Living Room Decor
+Variant B: Above the Sofa: Textured Gold Lion Printable Art
+Variant C: Luxury Masculine Office Decor for Living Room - Digital Download
+
+----- PIN DESCRIPTION -----
+Textured Gold Lion wall art printable - The Golden Lion. A thick palette-knife lion, mane in molten gold, eyes locked on you - pure presence. Instant digital download with portrait and landscape files, ready to print at home or at a print shop. Perfect for offices, studies, gift-for-him and bold statement walls. Luxury Masculine Office Decor.
+
+----- DESTINATION LINK -----
+Paste the Gumroad product link for "The Golden Lion" (see 00-master/product-links.csv)
+
+----- BOARDS (save to 1 main board now, to the others on later days) -----
+- Lion Wall Art
+- Men's Office Decor
+- Executive Office Art
+- Gold Textured Art
+- Luxury Animal Portraits
+- Study Room Decor
+
+----- TAGS -----
+#lionart #officedecor #goldlion #mensdecor
+
+----- ALT TEXT -----
+Textured Gold Lion printable wall art "The Golden Lion" displayed in a living room
