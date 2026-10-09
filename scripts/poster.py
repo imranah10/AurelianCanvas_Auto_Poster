@@ -219,18 +219,33 @@ def main():
     log(f"Aurelian Auto-Poster | today={today} | dry={args.dry_run} | platform={args.platform}")
     log(f"Schedule: {len(schedule)} items | posted={len(state.get('posted', []))}")
 
+    posted_before = len(state.get("posted", []))
+    due_total = 0
+
     if args.platform in ("all", "pinterest"):
         pins = pick_due_items(schedule, today, state, "pinterest", SETTINGS["max_pinterest_per_run"])
         log(f"Pinterest due: {len(pins)}")
+        due_total += len(pins)
         post_pinterest_items(pins, args.dry_run, state, today)
 
     if args.platform in ("all", "ig"):
         igs = pick_due_items(schedule, today, state, "ig", SETTINGS["max_ig_per_run"])
         log(f"Instagram due: {len(igs)}")
+        due_total += len(igs)
         post_ig_items(igs, args.dry_run, state, today)
 
     state2 = load_state()
-    log(f"DONE. total posted={len(state2.get('posted', []))} failed={len(state2.get('failed', []))}")
+    posted_this_run = len(state2.get("posted", [])) - posted_before
+    log(f"DONE. total posted={len(state2.get('posted', []))} failed={len(state2.get('failed', []))} | this run: due={due_total} posted={posted_this_run}")
+
+    # LOUD FAILURE (v1.1): due items existed but ZERO posts went live -> this run is a
+    # FAILURE, not a success. Exit 1 makes the run RED so GitHub emails the owner.
+    if not args.dry_run and due_total > 0 and posted_this_run == 0:
+        log("=" * 60)
+        log("ZERO POSTS WENT LIVE despite due items - marking this run FAILED (exit 1).")
+        log("Check the lines above: missing secrets, bad token permissions or media errors.")
+        log("=" * 60)
+        raise SystemExit(1)
 
 
 if __name__ == "__main__":
