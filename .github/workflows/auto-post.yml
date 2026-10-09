@@ -93,3 +93,26 @@ jobs:
           if [ -n "${{ inputs.platform }}" ]; then ARGS="$ARGS --platform ${{ inputs.platform }}"; fi
           git pull --rebase --autostash origin main || true
           python3 scripts/poster.py $ARGS
+
+      - name: Notify on failure (auto issue)
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TODAY=$(date -u +%F)
+          gh label create automation-failure --color D93F0B --force 2>/dev/null || true
+          BODY="Automation run FAILED.
+
+          - Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          - Trigger: ${{ github.event_name }}
+          - Time: $(date -u '+%F %T UTC')
+
+          Open the run logs above and check the last lines for the exact API error.
+          Missed items auto catch-up on the next successful run (due = date <= today)."
+          N=$(gh issue list --search "Poster failed on $TODAY in:title" --json number --jq 'length')
+          if [ "$N" -gt 0 ]; then
+            NUM=$(gh issue list --search "Poster failed on $TODAY in:title" --json number --jq '.[0].number')
+            gh issue comment "$NUM" --body "$BODY"
+          else
+            gh issue create --title "Poster failed on $TODAY (run ${{ github.run_number }})" --body "$BODY" --label automation-failure
+          fi
