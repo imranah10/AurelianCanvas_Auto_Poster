@@ -28,7 +28,7 @@ def git_commit(message: str) -> None:
     cmds = [
         ["git", "config", "user.name", "aurelian-bot"],
         ["git", "config", "user.email", "bot@aureliancanvas.local"],
-        ["git", "add", "state/posted.json", "media-ig"],
+        ["bash", "-c", "git add state/posted.json; git add media-ig 2>/dev/null; exit 0"],
         ["git", "commit", "-m", message] if _has_staged() else ["git", "status"],
         ["git", "pull", "--rebase", "--autostash", "origin", BRANCH or "main"],
         ["git", "push", "origin", f"HEAD:{BRANCH or 'main'}"],
@@ -38,7 +38,7 @@ def git_commit(message: str) -> None:
             log("Nothing to commit.")
             continue
         r = subprocess.run(cmd, cwd=C.ROOT, capture_output=True, text=True)
-        if r.returncode != 0 and "nothing to commit" not in r.stdout.lower():
+        if r.returncode != 0 and "nothing to commit" not in r.stdout.lower() and "no changes added" not in r.stdout.lower():
             log(f"git {' '.join(cmd[1:])} rc={r.returncode}: {r.stderr.strip()[:300]}")
 
 
