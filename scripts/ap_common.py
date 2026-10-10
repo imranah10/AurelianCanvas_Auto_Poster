@@ -87,7 +87,8 @@ def raw_url(path: Path, repo: str, branch: str) -> str:
 
 def pick_due_items(schedule: list, date: str, state: dict, platform: str, max_items: int) -> list:
     """Due = date <= today, not already posted (item_id), platform match, oldest first."""
-    posted = set(state.get("posted", []))
+    # state entries can be dicts ({"id":..,"at":..,"note":..}) or plain id strings
+    posted = {e["id"] if isinstance(e, dict) else e for e in state.get("posted", [])}
     due = [it for it in schedule if it["date"] <= date and it["platform"] == platform]
     due.sort(key=lambda x: (x["date"], x["day"], x["seq"]))
     out = []
