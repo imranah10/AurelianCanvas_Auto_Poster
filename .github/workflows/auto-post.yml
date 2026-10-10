@@ -2,10 +2,13 @@ name: Aurelian Auto-Poster
 
 on:
   schedule:
-    # 04:00 UTC = 9:30 AM IST (Pinterest batch 1)
-    - cron: "0 4 * * *"
-    # 14:30 UTC = 8:00 PM IST (Pinterest batch 2 + Instagram post)
-    - cron: "30 14 * * *"
+    # LAG-PROOF SCHEDULE: GitHub crons can fire hours late or get silently
+    # dropped, so instead of trusting two exact slots we poll every 20 minutes.
+    # The step below decides what to run based on the current UTC time:
+    #   04:00-14:29 UTC (9:30 AM-7:59 PM IST) -> Pinterest pins
+    #   14:30-23:59 UTC (8:00 PM-5:29 AM IST) -> Pinterest + Instagram
+    # The poster is idempotent (state/posted.json) so extra runs never double-post.
+    - cron: "*/20 * * * *"
   workflow_dispatch:            # manual "Run workflow" button
     inputs:
       dry_run:
@@ -20,6 +23,7 @@ on:
 
 permissions:
   contents: write               # commit state/posted.json + media-ig crops
+  issues: write                 # create automation-failure issues + label
 
 concurrency:
   group: aurelian-poster
@@ -43,8 +47,8 @@ jobs:
       - name: Install deps
         run: pip install --quiet pillow pynacl requests
 
-      - name: Run poster (morning batch)
-        if: github.event_name == 'schedule' && github.event.schedule == '0 4 * * *'
+      - name: Run poster (scheduled - windowed)
+        if: github.event_name == 'schedule'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_PAT: ${{ secrets.GH_PAT }}
@@ -56,24 +60,23 @@ jobs:
           PAGE_ACCESS_TOKEN: ${{ secrets.PAGE_ACCESS_TOKEN }}
           AURELIAN_BRANCH: main
         run: |
+          HM=$((10#$(date -u +%H)$(date -u +%M)))
+          if [ "$HM" -lt 400 ]; then
+            echo "Before 9:30 AM IST window - nothing scheduled, skipping."
+            exit 0
+          fi
+          if [ -z "$PINTEREST_REFRESH_TOKEN" ] && [ -z "$PINTEREST_ACCESS_TOKEN" ] && [ "$HM" -lt 1430 ]; then
+            echo "Pinterest secrets not set yet and day window only posts pins - skipping."
+            exit 0
+          fi
           git pull --rebase --autostash origin main || true
-          python3 scripts/poster.py --platform pinterest
-
-      - name: Run poster (evening batch)
-        if: github.event_name == 'schedule' && github.event.schedule == '30 14 * * *'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GH_PAT: ${{ secrets.GH_PAT }}
-          PINTEREST_REFRESH_TOKEN: ${{ secrets.PINTEREST_REFRESH_TOKEN }}
-          PINTEREST_CLIENT_ID: ${{ secrets.PINTEREST_CLIENT_ID }}
-          PINTEREST_CLIENT_SECRET: ${{ secrets.PINTEREST_CLIENT_SECRET }}
-          PINTEREST_ACCESS_TOKEN: ${{ secrets.PINTEREST_ACCESS_TOKEN }}
-          IG_USER_ID: ${{ secrets.IG_USER_ID }}
-          PAGE_ACCESS_TOKEN: ${{ secrets.PAGE_ACCESS_TOKEN }}
-          AURELIAN_BRANCH: main
-        run: |
-          git pull --rebase --autostash origin main || true
-          python3 scripts/poster.py
+          if [ "$HM" -ge 1430 ]; then
+            echo "Evening window (8:00 PM+ IST): Pinterest + Instagram"
+            python3 scripts/poster.py
+          else
+            echo "Day window (9:30 AM-7:59 PM IST): Pinterest pins"
+            python3 scripts/poster.py --platform pinterest
+          fi
 
       - name: Run poster (manual trigger)
         if: github.event_name == 'workflow_dispatch'
@@ -94,7 +97,7 @@ jobs:
           git pull --rebase --autostash origin main || true
           python3 scripts/poster.py $ARGS
 
-      - name: Notify on failure (auto issue)
+      - name: Notify on failure (auto issue, max 3 alerts/day)
         if: failure()
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -112,6 +115,11 @@ jobs:
           N=$(gh issue list --search "Poster failed on $TODAY in:title" --json number --jq 'length')
           if [ "$N" -gt 0 ]; then
             NUM=$(gh issue list --search "Poster failed on $TODAY in:title" --json number --jq '.[0].number')
+            C=$(gh issue view "$NUM" --json comments --jq '.comments | length')
+            if [ "$C" -ge 3 ]; then
+              echo "Alert cap reached (3 comments today) - not spamming further."
+              exit 0
+            fi
             gh issue comment "$NUM" --body "$BODY"
           else
             gh issue create --title "Poster failed on $TODAY (run ${{ github.run_number }})" --body "$BODY" --label automation-failure
