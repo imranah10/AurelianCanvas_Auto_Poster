@@ -222,17 +222,28 @@ def main():
     posted_before = len(state.get("posted", []))
     due_total = 0
 
+    import os as _os
+    pin_ready = args.dry_run or bool(
+        _os.environ.get("PINTEREST_REFRESH_TOKEN") or _os.environ.get("PINTEREST_ACCESS_TOKEN"))
     if args.platform in ("all", "pinterest"):
         pins = pick_due_items(schedule, today, state, "pinterest", SETTINGS["max_pinterest_per_run"])
-        log(f"Pinterest due: {len(pins)}")
-        due_total += len(pins)
-        post_pinterest_items(pins, args.dry_run, state, today)
+        if pin_ready:
+            log(f"Pinterest due: {len(pins)}")
+            due_total += len(pins)
+            post_pinterest_items(pins, args.dry_run, state, today)
+        else:
+            log(f"Pinterest due: {len(pins)} - SKIPPED (secrets not set; not counted as failure)")
 
+    ig_ready = args.dry_run or bool(
+        _os.environ.get("IG_USER_ID") and _os.environ.get("PAGE_ACCESS_TOKEN"))
     if args.platform in ("all", "ig"):
         igs = pick_due_items(schedule, today, state, "ig", SETTINGS["max_ig_per_run"])
-        log(f"Instagram due: {len(igs)}")
-        due_total += len(igs)
-        post_ig_items(igs, args.dry_run, state, today)
+        if ig_ready:
+            log(f"Instagram due: {len(igs)}")
+            due_total += len(igs)
+            post_ig_items(igs, args.dry_run, state, today)
+        else:
+            log(f"Instagram due: {len(igs)} - SKIPPED (secrets not set; not counted as failure)")
 
     state2 = load_state()
     posted_this_run = len(state2.get("posted", [])) - posted_before
