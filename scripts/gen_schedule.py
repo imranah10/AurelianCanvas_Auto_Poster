@@ -1,8 +1,16 @@
 #!/usr/bin/env python3
 """Builds data/schedule.json - the full 90-day posting plan with captions inline.
+v2 MIXED PATTERN (no more multi-week blocks):
+  IG:        days 1-6 = launch reels (matches already-posted D001-D006). From day 7 a
+             repeating 7-day cycle [reel, image, image, reel, image, image, image]
+             -> 42 reels + 48 images over 90 days. Art order cycles independently
+             per post type, so every art gets exactly 6 reels (2 passes x 3 videos)
+             and 6-7 image posts.
+  Pinterest: repeating [video, image, image] interleave across the 63-entry asset
+             cycle instead of 21-video blocks.
 Run once locally (or re-run any time): python3 scripts/gen_schedule.py
-Day 1 = settings.start_date. Rotation is deterministic so posts are varied and repeat
-visits to the same asset always get a fresh caption/variant."""
+Day 1 = settings.start_date. Rotation is deterministic so repeat visits to the
+same asset always get a fresh caption/variant."""
 import json
 import sys
 from datetime import timedelta
@@ -22,30 +30,43 @@ BUNDLE_BOARDS = {
     "storybook-diptych": "Cottagecore Aesthetic",
     "full-collection": "Printable Wall Art",
 }
-# Per-art round sequence (13 rounds ~ 90 days / 7 arts)
-ROUNDS_SEQ = [("video", 1), ("video", 2), ("video", 3),
-              ("image", 1), ("image", 2), ("image", 3), ("image", 4), ("image", 5), ("image", 6),
-              ("video", 1), ("video", 2), ("video", 3), ("image", 1)]
+# IG launch week: days 1-6 all reels (already live as D001-D006).
+IG_LAUNCH_REEL_DAYS = 6
+# From day 7: within every 7-day cycle these day-positions are reels (0-based),
+# the rest are image posts -> 3 reels + 4 images per week, perfectly mixed.
+IG_VIDEO_CYCLE = (0, 2, 4)
 
 
 def build_ig_items():
     items = []
     total_days = SETTINGS["plan_days"]
+    reel_i = 0                      # art cursor for reels (cycles ARTS)
+    img_i = 0                       # art cursor for image posts (cycles ARTS)
+    v_used = {a: 0 for a in ARTS}   # reels assigned per art so far
+    i_used = {a: 0 for a in ARTS}   # images assigned per art so far
     for d in range(1, total_days + 1):
-        art = ARTS[(d - 1) % len(ARTS)]
-        rnd = (d - 1) // len(ARTS)  # 0-based round
-        asset_type, slot = ROUNDS_SEQ[rnd]
-        ac = ART_CONTENT[art]
-        if asset_type == "image":
-            cap = ac["ig_image_caps"][(slot - 1) % len(ac["ig_image_caps"])]
-        else:
+        is_video = d <= IG_LAUNCH_REEL_DAYS or (d - 7) % 7 in IG_VIDEO_CYCLE
+        if is_video:
+            art = ARTS[reel_i % len(ARTS)]
+            reel_i += 1
+            slot = (v_used[art] % 3) + 1
+            second_pass = v_used[art] >= 3
+            v_used[art] += 1
+            ac = ART_CONTENT[art]
             cap = ac["ig_reel_caps"][(slot - 1) % len(ac["ig_reel_caps"])]
-            if rnd >= 9:  # second pass on reels: add rotating PS
+            if second_pass:  # repeat visit to the same reel: rotating PS line
                 cap = cap + "\n\n" + REPEAT_PS[(d - 1) % len(REPEAT_PS)]
+        else:
+            art = ARTS[img_i % len(ARTS)]
+            img_i += 1
+            slot = (i_used[art] % 6) + 1
+            i_used[art] += 1
+            ac = ART_CONTENT[art]
+            cap = ac["ig_image_caps"][(slot - 1) % len(ac["ig_image_caps"])]
         date = (date0 + timedelta(days=d - 1)).isoformat()
         items.append({
             "id": f"IG-D{d:03d}", "seq": 1, "day": d, "date": date, "platform": "ig",
-            "art": art, "asset_type": asset_type, "asset_slot": slot,
+            "art": art, "asset_type": "video" if is_video else "image", "asset_slot": slot,
             "ig_caption": f"{cap}\n\n{ac['hashtags']}",
         })
     return items
@@ -55,13 +76,18 @@ def build_pinterest_items():
     items = []
     total_days = SETTINGS["plan_days"]
     pins_per_day = SETTINGS["pinterest_pins_per_day"]
-    # interleaved asset list: rotate across arts so consecutive pins differ
+    # v2 INTERLEAVED asset cycle: repeating [video, image, image] over the
+    # 63-entry cycle (7 arts x 3 videos + 7 arts x 6 images) so video pins are
+    # spread evenly instead of arriving in 21-pin video blocks.
+    vids = [(art, "video", s) for s in (1, 2, 3) for art in ARTS]
+    imgs = [(art, "image", s) for s in range(1, 7) for art in ARTS]
     assets = []
-    for slot in range(1, 10):
-        a_type = "video" if slot <= 3 else "image"
-        s = slot if slot <= 3 else slot - 3
-        for art in ARTS:
-            assets.append((art, a_type, s))
+    vi = ii = 0
+    for p in range(len(vids) + len(imgs)):
+        if p % 3 == 0:
+            assets.append(vids[vi]); vi += 1
+        else:
+            assets.append(imgs[ii]); ii += 1
     # 63 entries; boards rotate every 3 pins, caption variant every full cycle
     pin_i = 0
     for d in range(1, total_days + 1):
@@ -124,6 +150,7 @@ if __name__ == "__main__":
         sys.exit(1)
 
     out = ROOT / "data" / "schedule.json"
+    out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(schedule, indent=1, ensure_ascii=False), encoding="utf-8")
     log(f"Schedule written: {out} ({out.stat().st_size // 1024} KB)")
     log(f"IG items: {len(ig)} | Pinterest items: {len(pins)} | total {len(schedule)}")
