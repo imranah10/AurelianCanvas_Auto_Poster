@@ -34,13 +34,12 @@
    "id": "IG-D007",
    "at": "2026-10-14T19:56:07.128436+00:00",
    "note": ""
-  }
- ],
- "failed": [
+  },
   {
    "id": "IG-D008",
-   "at": "2026-10-15T19:23:09.681067+00:00",
-   "note": "IG HTTP 400: {\"error\":{\"message\":\"Only photo or video can be accepted as media type.\",\"type\":\"OAuthException\",\"code\":9004,\"error_subcode\":2207052,\"is_transient\":false,\"error_user_title\":\"Media downloa"
+   "at": "2026-10-15T22:40:07.898414+00:00",
+   "note": ""
   }
- ]
+ ],
+ "failed": []
 }
