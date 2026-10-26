@@ -89,13 +89,12 @@
    "id": "IG-D018",
    "at": "2026-10-25T20:15:55.207079+00:00",
    "note": ""
-  }
- ],
- "failed": [
+  },
   {
    "id": "IG-D019",
-   "at": "2026-10-26T18:43:01.257647+00:00",
-   "note": "IG HTTP 400: {\"error\":{\"message\":\"Media ID is not available\",\"type\":\"OAuthException\",\"code\":9007,\"error_subcode\":2207027,\"is_transient\":false,\"error_user_title\":\"Cannot publish\",\"error_user_msg\":\"The "
+   "at": "2026-10-26T22:59:18.334886+00:00",
+   "note": ""
   }
- ]
+ ],
+ "failed": []
 }
