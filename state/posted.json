@@ -106,5 +106,11 @@
    "note": ""
   }
  ],
- "failed": []
+ "failed": [
+  {
+   "id": "IG-D022",
+   "at": "2026-10-29T18:30:51.024618+00:00",
+   "note": "IG HTTP 400: {\"error\":{\"message\":\"Media ID is not available\",\"type\":\"OAuthException\",\"code\":9007,\"error_subcode\":2207027,\"is_transient\":false,\"error_user_title\":\"Cannot publish\",\"error_user_msg\":\"The "
+  }
+ ]
 }
